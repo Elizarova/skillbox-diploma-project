@@ -14,10 +14,10 @@ class App extends React.Component {
       .get('/photos/', {
         params: { page: this.state.currentPage },
       })
-      .then(data => {
+      .then(response => {
         this.setState({
           currentPage: this.state.currentPage + 1,
-          photos: this.state.photos.concat(data.data),
+          photos: this.state.photos.concat(response.data),
         })
       })
       .catch(error => {
