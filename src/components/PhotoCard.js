@@ -24,19 +24,17 @@ class PhotoCard extends React.Component {
   render() {
     const { photo, onPhotoSelect } = this.props
     const { description, urls, likes, user, updated_at } = this.props.photo
-    const unsplashUrl = 'https://unsplash.com'
-    const unsplashUserPortfolio = `${unsplashUrl}/@${user.username}`
 
     return (
       <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
         <div className="ui card">
           <div className="image" onClick={() => onPhotoSelect(photo)}>
-            <img ref={this.imageRef} alt={description} src={urls.thumb} />
+            <img ref={this.imageRef} alt={description} src={urls.small} />
           </div>
           <div className="content">
             Photo by&nbsp;
-            <a href={unsplashUserPortfolio}>{user.name}</a> on
-            <a href={unsplashUrl}>&nbsp;Unsplash</a>
+            <a href={user.links.html}>{user.name}</a> on
+            <a href="https://unsplash.com/">&nbsp;Unsplash</a>
           </div>
           <div className="extra content">
             <span className="right floated">
