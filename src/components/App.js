@@ -1,9 +1,10 @@
 import React from 'react'
 import unsplash from '../api/unsplash'
 import PhotoList from './PhotoList'
+import PhotoDetail from './PhotoDetail'
 
 class App extends React.Component {
-  state = { photos: [], currentPage: 1 }
+  state = { photos: [], currentPage: 1, selectedPhoto: null }
 
   componentDidMount() {
     this.loadData()
@@ -25,10 +26,18 @@ class App extends React.Component {
       })
   }
 
+  onPhotoSelect = photo => {
+    this.setState({ selectedPhoto: photo })
+  }
+
   render() {
     return (
       <div className="ui container" style={{ marginTop: '10px' }}>
-        <PhotoList photos={this.state.photos} />
+        <PhotoDetail photo={this.state.selectedPhoto} />
+        <PhotoList
+          photos={this.state.photos}
+          onPhotoSelect={this.onPhotoSelect}
+        />
         <button onClick={this.loadData} type="button" className="ui button">
           Load more
         </button>
