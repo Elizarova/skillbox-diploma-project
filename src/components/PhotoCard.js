@@ -24,6 +24,8 @@ class PhotoCard extends React.Component {
   render() {
     const { photo, onPhotoSelect } = this.props
     const { description, urls, likes, user, updated_at } = this.props.photo
+    const unsplashUrl = 'https://unsplash.com'
+    const unsplashUserPortfolio = `${unsplashUrl}/@${user.username}`
 
     return (
       <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
@@ -32,22 +34,16 @@ class PhotoCard extends React.Component {
             <img ref={this.imageRef} alt={description} src={urls.thumb} />
           </div>
           <div className="content">
-            <img
-              className="ui avatar image"
-              alt={user.name}
-              src={user.profile_image.small}
-            />
-            <a href={user.portfolio_url}>{user.name}</a>
+            Photo by&nbsp;
+            <a href={unsplashUserPortfolio}>{user.name}</a> on
+            <a href={unsplashUrl}>&nbsp;Unsplash</a>
           </div>
           <div className="extra content">
             <span className="right floated">
-              <i className="heart outline like icon" />
+              <i className="heart outline icon" />
               {likes} likes
             </span>
-            <span>
-              <i className="calendar alternate outline icon" />
-              {dateConverter(updated_at)}
-            </span>
+            <span>{dateConverter(updated_at)}</span>
           </div>
         </div>
       </div>
