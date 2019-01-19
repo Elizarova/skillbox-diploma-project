@@ -1,0 +1,34 @@
+.photo-view {
+
+text-align: center;
+
+}
+.content {
+  padding: 1em 1em;
+  border: 1px solid rgba(34,36,38,.15);
+  box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+  display: inline-block;
+}
+
+ .photo {
+
+  height: 700px;
+
+} 
+
+.photo img{
+
+  max-height: 100%; 
+  width: auto;
+  
+}
+
+.photo-close {
+  margin-top: 10px;
+  
+}
+
+.photo-detail {
+  margin-top: 10px;
+  text-align: initial;
+}

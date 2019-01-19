@@ -1,52 +1,33 @@
 import dateConverter from '../utils/dateConverter'
 import React from 'react'
+import Photo from './Photo'
+import { Link } from 'react-router-dom'
 
-class PhotoCard extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { spans: 0 }
-    this.imageRef = React.createRef()
-  }
+const PhotoCard = ({ photo }) => {
+  const { likes, user, updated_at, id, urls, description } = photo
 
-  componentDidMount() {
-    // console.log(this.imageRef);
-    this.imageRef.current.addEventListener('load', this.setSpans)
-  }
+  return (
+    <div className="ui card">
+      <Link to={{ pathname: `/photo/${id}` }}>
+        <Photo src={urls.thumb} description={description} />
+      </Link>
 
-  setSpans = () => {
-    // 105px is a height of details in card div
-    // TO DO get height of photo-card
-    const height = this.imageRef.current.clientHeight + 105
-    const spans = Math.ceil(height / 10)
-    this.setState({ spans })
-  }
-
-  render() {
-    const { photo, onPhotoSelect } = this.props
-    const { description, urls, likes, user, updated_at } = this.props.photo
-
-    return (
-      <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
-        <div className="ui card">
-          <div className="image" onClick={() => onPhotoSelect(photo)}>
-            <img ref={this.imageRef} alt={description} src={urls.small} />
-          </div>
-          <div className="content">
-            Photo by&nbsp;
-            <a href={user.links.html}>{user.name}</a> on
-            <a href="https://unsplash.com/">&nbsp;Unsplash</a>
-          </div>
-          <div className="extra content">
-            <span className="right floated">
-              <i className="heart outline icon" />
-              {likes} likes
-            </span>
-            <span>{dateConverter(updated_at)}</span>
-          </div>
-        </div>
+      <div className="content">
+        <p>
+          Photo by&nbsp;
+          <a href={user.links.html}>{user.name}</a> on
+          <a href="https://unsplash.com/">&nbsp;Unsplash</a>
+        </p>
       </div>
-    )
-  }
+      <div className="extra content">
+        <span className="right floated">
+          <i className="heart outline icon" />
+          {likes} likes
+        </span>
+        <span>{dateConverter(updated_at)}</span>
+      </div>
+    </div>
+  )
 }
 
 export default PhotoCard
