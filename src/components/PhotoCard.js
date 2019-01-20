@@ -7,24 +7,26 @@ const PhotoCard = ({ photo }) => {
   const { likes, user, updated_at, id, urls, description } = photo
 
   return (
-    <div className="ui card">
-      <Link to={{ pathname: `/photo/${id}` }}>
-        <Photo src={urls.thumb} description={description} />
-      </Link>
+    <div class="column">
+      <div className="ui card">
+        <Link to={{ pathname: `/photo/${id}` }}>
+          <Photo src={urls.thumb} description={description} />
+        </Link>
 
-      <div className="content">
-        <p>
-          Photo by&nbsp;
-          <a href={user.links.html}>{user.name}</a> on
-          <a href="https://unsplash.com/">&nbsp;Unsplash</a>
-        </p>
-      </div>
-      <div className="extra content">
-        <span className="right floated">
-          <i className="heart outline icon" />
-          {likes} likes
-        </span>
-        <span>{dateConverter(updated_at)}</span>
+        <div className="content">
+          <p>
+            Photo by&nbsp;
+            <a href={user.links.html}>{user.name}</a> on
+            <a href="https://unsplash.com/">&nbsp;Unsplash</a>
+          </p>
+        </div>
+        <div className="extra content">
+          <span className="right floated">
+            <i className="heart outline icon" />
+            {likes} likes
+          </span>
+          <span>{dateConverter(updated_at)}</span>
+        </div>
       </div>
     </div>
   )
