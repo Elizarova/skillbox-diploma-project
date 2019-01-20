@@ -4,7 +4,8 @@ import Photo from '../components/Photo'
 import LikeIcon from '../components/LikeIcon'
 import { Route, Redirect } from 'react-router-dom'
 import './PhotoView.css'
-const PhotoView = ({ match, history, photos }) => {
+
+const PhotoView = ({ match, history, photos, onClickLike }) => {
   let photo = photos.filter(photo => photo.id === match.params.id)[0]
 
   if (!photo)
@@ -14,14 +15,14 @@ const PhotoView = ({ match, history, photos }) => {
       </Route>
     )
 
-  console.log(photos)
-  console.log('photoView', photo)
+  // console.log(photos)
+  // console.log('photoView', photo)
   let back = e => {
     e.stopPropagation()
     history.goBack()
   }
 
-  const { likes, user, updated_at, liked_by_user } = photo
+  const { likes, user, updated_at } = photo
 
   return (
     <div className="photo-view">
@@ -32,8 +33,11 @@ const PhotoView = ({ match, history, photos }) => {
         <div className="photo-detail">
           <div>
             <span style={{ float: 'right' }}>
-              <LikeIcon likes={likes} liked_by_user={liked_by_user} />
-              {likes} likes
+              <LikeIcon
+                likes={likes}
+                photoId={photo.id}
+                onClickLike={onClickLike}
+              />
             </span>
             <p>
               Photo by&nbsp;

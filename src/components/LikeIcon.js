@@ -4,21 +4,39 @@ class LikeIcon extends React.Component {
   constructor() {
     super()
     this.state = {
-      liked_by_user: true,
+      liked: false,
     }
   }
+  // console.log('LikeIcon', props)
 
-  handleClick = () => {
-    this.setState({
-      liked_by_user: !this.state.liked_by_user,
-    })
-  }
+  // handleClick = () => {
+  //   this.setState({
+  //     liked: !this.state.liked_by_user,
+  //   })
+  // }
   render() {
-    const label = this.state.liked_by_user ? 'red' : 'black outline'
+    const label = this.state.liked ? 'red' : 'black outline'
     return (
-      <i onClick={this.handleClick} className={`${label} large heart icon`} />
+      <div>
+        <i
+          onClick={() => this.props.onClickLike(this.props.photoId)}
+          className={`${label} large heart icon`}
+        />
+        {this.props.likes} likes
+      </div>
     )
   }
+
+  // <i onClick={this.handleClick} className={`${label} large heart icon`} />
 }
+// class LikeIcon extends React.Component {
+
+//   constructor() {
+
+//     super()
+//     this.state = {
+//       liked: this.props.liked_by_user,
+//     }
+//   }
 
 export default LikeIcon

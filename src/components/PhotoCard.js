@@ -7,7 +7,7 @@ const PhotoCard = ({ photo }) => {
   const { likes, user, updated_at, id, urls, description } = photo
 
   return (
-    <div class="column">
+    <div className="column">
       <div className="ui card">
         <Link to={{ pathname: `/photo/${id}` }}>
           <Photo src={urls.thumb} description={description} />

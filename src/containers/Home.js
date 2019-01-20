@@ -1,11 +1,14 @@
-import React from 'react'
+import unsplash from '../api/unsplash'
 
 const Home = () => {
-  return (
-    <div>
-      <h3>Home</h3>
-    </div>
-  )
+  const authenticationUrl = unsplash.auth.getAuthenticationUrl([
+    'public',
+    'write_likes',
+  ])
+
+  console.log(authenticationUrl)
+  window.location.assign(authenticationUrl)
+  return null
 }
 
 export default Home
