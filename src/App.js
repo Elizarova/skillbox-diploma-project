@@ -9,7 +9,7 @@ import PageNotFound from './containers/PageNotFound'
 
 // let code = '884c90f362fb7fa1171e44698604ff6defa28a084999f1890c79245e457d455d'
 const code = window.location.search.split('code=')[1]
-
+console.log(code)
 class App extends React.Component {
   state = { photos: [], currentPage: 1 }
 
@@ -23,8 +23,9 @@ class App extends React.Component {
         .userAuthentication(code)
         .then(toJson)
         .then(json => {
-          unsplash.auth.setBearerToken(json.access_token)
           console.log(json)
+          unsplash.auth.setBearerToken(json.access_token)
+
           unsplash.photos
             .listPhotos(this.state.currentPage, 4, 'latest')
             .then(toJson)
