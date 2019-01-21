@@ -1,42 +1,68 @@
 import React from 'react'
+import unsplash from '../api/unsplash'
+import { toJson } from 'unsplash-js'
 
 class LikeIcon extends React.Component {
   constructor() {
     super()
-    this.state = {
-      liked: false,
+    this.state = { liked: null, likes: null }
+  }
+
+  componentDidMount() {
+    console.log(this.state)
+    this.setState({
+      liked: this.props.photo.liked_by_user,
+      likes: this.props.photo.likes,
+    })
+  }
+
+  onClickLike = photo => {
+    if (!this.state.liked) {
+      unsplash.photos
+        .likePhoto(photo.id)
+        .then(toJson)
+        .then(json => {
+          unsplash.photos
+            .getPhoto(json.photo.id)
+            .then(toJson)
+            .then(json => {
+              this.setState({
+                liked: json.liked_by_user,
+                likes: json.likes,
+              })
+            })
+        })
+    } else {
+      unsplash.photos
+        .unlikePhoto(photo.id)
+        .then(toJson)
+        .then(json => {
+          unsplash.photos
+            .getPhoto(json.photo.id)
+            .then(toJson)
+            .then(json => {
+              this.setState({
+                liked: json.liked_by_user,
+                likes: json.likes,
+              })
+            })
+        })
     }
   }
-  // console.log('LikeIcon', props)
 
-  // handleClick = () => {
-  //   this.setState({
-  //     liked: !this.state.liked_by_user,
-  //   })
-  // }
   render() {
-    const label = this.state.liked ? 'red' : 'black outline'
+    const label = this.state.liked ? 'red inline' : 'black outline'
+    console.log(this.state)
     return (
       <div>
         <i
-          onClick={() => this.props.onClickLike(this.props.photoId)}
+          onClick={() => this.onClickLike(this.props.photo)}
           className={`${label} large heart icon`}
         />
-        {this.props.likes} likes
+        {this.state.likes} likes
       </div>
     )
   }
-
-  // <i onClick={this.handleClick} className={`${label} large heart icon`} />
 }
-// class LikeIcon extends React.Component {
-
-//   constructor() {
-
-//     super()
-//     this.state = {
-//       liked: this.props.liked_by_user,
-//     }
-//   }
 
 export default LikeIcon

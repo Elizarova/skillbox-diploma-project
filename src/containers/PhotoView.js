@@ -15,29 +15,23 @@ const PhotoView = ({ match, history, photos, onClickLike }) => {
       </Route>
     )
 
-  // console.log(photos)
-  // console.log('photoView', photo)
-  let back = e => {
+  const back = e => {
     e.stopPropagation()
     history.goBack()
   }
 
-  const { likes, user, updated_at } = photo
+  const { user, updated_at } = photo
 
   return (
     <div className="photo-view">
       <div className="content">
         <div className="photo">
-          <Photo src={photo.urls.regular} descripton={photo.descripton} />
+          <Photo src={photo.urls.thumb} descripton={photo.descripton} />
         </div>
         <div className="photo-detail">
           <div>
             <span style={{ float: 'right' }}>
-              <LikeIcon
-                likes={likes}
-                photoId={photo.id}
-                onClickLike={onClickLike}
-              />
+              <LikeIcon photo={photo} onClickLike={onClickLike} />
             </span>
             <p>
               Photo by&nbsp;

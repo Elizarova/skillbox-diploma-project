@@ -7,55 +7,42 @@ import Auth from './containers/Auth'
 import PhotoView from './containers/PhotoView'
 import PageNotFound from './containers/PageNotFound'
 
-// let code = '884c90f362fb7fa1171e44698604ff6defa28a084999f1890c79245e457d455d'
 const code = window.location.search.split('code=')[1]
-console.log(code)
+//const code = '9541234c2d3d3d073a1c88730f078ca5abebcad54008611b67e292597254d9dc'
+
 class App extends React.Component {
-  state = { photos: [], currentPage: 1 }
+  state = { photos: [], currentPage: 1, perPage: 4 }
 
   componentDidMount() {
-    this.loadData()
-  }
-
-  loadData = () => {
-    const userAuthentication = code => {
-      return unsplash.auth
-        .userAuthentication(code)
-        .then(toJson)
-        .then(json => {
-          console.log(json)
-          unsplash.auth.setBearerToken(json.access_token)
-
-          unsplash.photos
-            .listPhotos(this.state.currentPage, 4, 'latest')
-            .then(toJson)
-            .then(json => {
-              this.setState({
-                currentPage: this.state.currentPage + 1,
-                photos: this.state.photos.concat(json),
-              })
-
-              console.log('loadData', json)
+    return unsplash.auth
+      .userAuthentication(code)
+      .then(toJson)
+      .then(json => {
+        unsplash.auth.setBearerToken(json.access_token)
+        unsplash.photos
+          .listPhotos(1, this.state.perPage, 'latest')
+          .then(toJson)
+          .then(json => {
+            this.setState({
+              //currentPage: this.state.currentPage + 1,
+              photos: json,
+              perPage: this.state.perPage + 2,
             })
-        })
-    }
-    userAuthentication(code)
+          })
+      })
   }
 
-  onClickLike = photo => {
-    const userAuthentication = code => {
-      return unsplash.auth
-        .userAuthentication(code)
-        .then(toJson)
-        .then(json => {
-          unsplash.auth.setBearerToken(json.access_token)
-
-          unsplash.photos.likePhoto(photo.id)
-          console.log(json)
+  onClickLodeMore = () => {
+    return unsplash.photos
+      .listPhotos(1, this.state.perPage, 'latest')
+      .then(toJson)
+      .then(json => {
+        this.setState({
+          // currentPage: this.state.currentPage + 1,
+          photos: json,
+          perPage: this.state.perPage + 2,
         })
-        .catch(err => console.log(err))
-    }
-    userAuthentication(code)
+      })
   }
 
   render() {
@@ -73,18 +60,14 @@ class App extends React.Component {
               <Auth
                 {...props}
                 photos={this.state.photos}
-                loadData={this.loadData}
+                onClickLodeMore={this.onClickLodeMore}
               />
             )}
           />
           <Route
             path="/photo/:id"
             render={props => (
-              <PhotoView
-                {...props}
-                photos={this.state.photos}
-                onClickLike={this.onClickLike}
-              />
+              <PhotoView {...props} photos={this.state.photos} />
             )}
           />
           <Route component={PageNotFound} />
@@ -95,19 +78,3 @@ class App extends React.Component {
 }
 
 export default App
-
-// loadData = () => {
-//   unsplash
-//     .get('/photos/', {
-//       params: { page: this.state.currentPage },
-//     })
-//     .then(response => {
-//       this.setState({
-//         currentPage: this.state.currentPage + 1,
-//         photos: this.state.photos.concat(response.data),
-//       })
-//     })
-//     .catch(error => {
-//       console.log('Error happened during fetching!', error)
-//     })
-// }
