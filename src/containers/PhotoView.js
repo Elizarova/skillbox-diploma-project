@@ -11,8 +11,8 @@ const PhotoView = ({ match, history, photos, onClickLike, onClickBack }) => {
 
   const back = e => {
     e.stopPropagation()
-    onClickBack()
     history.goBack()
+    onClickBack()
   }
 
   const { user, updated_at } = photo

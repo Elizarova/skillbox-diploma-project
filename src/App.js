@@ -7,11 +7,11 @@ import Auth from './containers/Auth'
 import PhotoView from './containers/PhotoView'
 import PageNotFound from './containers/PageNotFound'
 
-const code = window.location.search.split('code=')[1]
-// const code = '3acbe7884d4891909fbeef7823fa5cae23ea61dc3eb3edee1c05c1b1e53e52f8'
+// const code = window.location.search.split('code=')[1]
+const code = '22e88fd78e356aa294ee1358ee7d792dc70608cc65e9bf60490206785298676e'
 
 class App extends React.Component {
-  state = { photos: [], currentPage: 1, perPage: 0 }
+  state = { photos: [], currentPage: 1 }
 
   componentDidMount() {
     return unsplash.auth
@@ -20,13 +20,12 @@ class App extends React.Component {
       .then(json => {
         unsplash.auth.setBearerToken(json.access_token)
         unsplash.photos
-          .listPhotos(1, this.state.perPage + 4, 'latest')
+          .listPhotos(this.state.currentPage, 4, 'latest')
           .then(toJson)
           .then(json => {
             this.setState({
-              //currentPage: this.state.currentPage + 1,
-              photos: json,
-              perPage: this.state.perPage,
+              currentPage: this.state.currentPage + 1,
+              photos: this.state.photos.concat(json),
             })
           })
       })
@@ -34,13 +33,12 @@ class App extends React.Component {
 
   onClickLodeMore = () => {
     return unsplash.photos
-      .listPhotos(1, this.state.perPage + 4, 'latest')
+      .listPhotos(this.state.currentPage, 4, 'latest')
       .then(toJson)
       .then(json => {
         this.setState({
-          // currentPage: this.state.currentPage + 1,
-          photos: json,
-          perPage: this.state.perPage,
+          currentPage: this.state.currentPage + 1,
+          photos: this.state.photos.concat(json),
         })
       })
   }
@@ -49,11 +47,10 @@ class App extends React.Component {
     console.log('state1', this.state)
     return unsplash.photos
 
-      .listPhotos(1, this.state.perPage, 'latest')
+      .listPhotos(1, this.state.photos.length, 'latest')
       .then(toJson)
       .then(json => {
         this.setState({
-          // currentPage: this.state.currentPage + 1,
           photos: json,
         })
         console.log('state2', this.state)
