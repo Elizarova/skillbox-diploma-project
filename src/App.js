@@ -11,7 +11,7 @@ const code = window.location.search.split('code=')[1]
 //const code = '9541234c2d3d3d073a1c88730f078ca5abebcad54008611b67e292597254d9dc'
 
 class App extends React.Component {
-  state = { photos: [], currentPage: 1, perPage: 4 }
+  state = { photos: [], currentPage: 1, perPage: 10 }
 
   componentDidMount() {
     return unsplash.auth
@@ -26,7 +26,7 @@ class App extends React.Component {
             this.setState({
               //currentPage: this.state.currentPage + 1,
               photos: json,
-              perPage: this.state.perPage + 2,
+              perPage: this.state.perPage + 10,
             })
           })
       })
@@ -40,7 +40,7 @@ class App extends React.Component {
         this.setState({
           // currentPage: this.state.currentPage + 1,
           photos: json,
-          perPage: this.state.perPage + 2,
+          perPage: this.state.perPage + 10,
         })
       })
   }

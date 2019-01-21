@@ -26,7 +26,7 @@ const PhotoView = ({ match, history, photos, onClickLike }) => {
     <div className="photo-view">
       <div className="content">
         <div className="photo">
-          <Photo src={photo.urls.thumb} descripton={photo.descripton} />
+          <Photo src={photo.urls.regular} descripton={photo.descripton} />
         </div>
         <div className="photo-detail">
           <div>
