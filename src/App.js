@@ -7,8 +7,8 @@ import Auth from './containers/Auth'
 import PhotoView from './containers/PhotoView'
 import PageNotFound from './containers/PageNotFound'
 
-// const code = window.location.search.split('code=')[1]
-const code = '3acbe7884d4891909fbeef7823fa5cae23ea61dc3eb3edee1c05c1b1e53e52f8'
+const code = window.location.search.split('code=')[1]
+// const code = '3acbe7884d4891909fbeef7823fa5cae23ea61dc3eb3edee1c05c1b1e53e52f8'
 
 class App extends React.Component {
   state = { photos: [], currentPage: 1, perPage: 0 }
