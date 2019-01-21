@@ -7,11 +7,11 @@ import Auth from './containers/Auth'
 import PhotoView from './containers/PhotoView'
 import PageNotFound from './containers/PageNotFound'
 
-const code = window.location.search.split('code=')[1]
-//const code = '9541234c2d3d3d073a1c88730f078ca5abebcad54008611b67e292597254d9dc'
+// const code = window.location.search.split('code=')[1]
+const code = '3acbe7884d4891909fbeef7823fa5cae23ea61dc3eb3edee1c05c1b1e53e52f8'
 
 class App extends React.Component {
-  state = { photos: [], currentPage: 1, perPage: 10 }
+  state = { photos: [], currentPage: 1, perPage: 0 }
 
   componentDidMount() {
     return unsplash.auth
@@ -20,13 +20,13 @@ class App extends React.Component {
       .then(json => {
         unsplash.auth.setBearerToken(json.access_token)
         unsplash.photos
-          .listPhotos(1, this.state.perPage, 'latest')
+          .listPhotos(1, this.state.perPage + 4, 'latest')
           .then(toJson)
           .then(json => {
             this.setState({
               //currentPage: this.state.currentPage + 1,
               photos: json,
-              perPage: this.state.perPage + 10,
+              perPage: this.state.perPage,
             })
           })
       })
@@ -34,14 +34,29 @@ class App extends React.Component {
 
   onClickLodeMore = () => {
     return unsplash.photos
+      .listPhotos(1, this.state.perPage + 4, 'latest')
+      .then(toJson)
+      .then(json => {
+        this.setState({
+          // currentPage: this.state.currentPage + 1,
+          photos: json,
+          perPage: this.state.perPage,
+        })
+      })
+  }
+
+  onClickBack = () => {
+    console.log('state1', this.state)
+    return unsplash.photos
+
       .listPhotos(1, this.state.perPage, 'latest')
       .then(toJson)
       .then(json => {
         this.setState({
           // currentPage: this.state.currentPage + 1,
           photos: json,
-          perPage: this.state.perPage + 10,
         })
+        console.log('state2', this.state)
       })
   }
 
@@ -67,7 +82,11 @@ class App extends React.Component {
           <Route
             path="/photo/:id"
             render={props => (
-              <PhotoView {...props} photos={this.state.photos} />
+              <PhotoView
+                {...props}
+                photos={this.state.photos}
+                onClickBack={this.onClickBack}
+              />
             )}
           />
           <Route component={PageNotFound} />

@@ -2,21 +2,16 @@ import dateConverter from '../utils/dateConverter'
 import React from 'react'
 import Photo from '../components/Photo'
 import LikeIcon from '../components/LikeIcon'
-import { Route, Redirect } from 'react-router-dom'
 import './PhotoView.css'
 
-const PhotoView = ({ match, history, photos, onClickLike }) => {
+const PhotoView = ({ match, history, photos, onClickLike, onClickBack }) => {
   let photo = photos.filter(photo => photo.id === match.params.id)[0]
 
-  if (!photo)
-    return (
-      <Route exact path="/">
-        <Redirect to="/home" />
-      </Route>
-    )
+  if (!photo) return null
 
   const back = e => {
     e.stopPropagation()
+    onClickBack()
     history.goBack()
   }
 
