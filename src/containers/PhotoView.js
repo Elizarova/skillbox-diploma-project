@@ -11,7 +11,7 @@ const PhotoView = ({ match, history, photos, onClickLike }) => {
   if (!photo)
     return (
       <Route exact path="/">
-        <Redirect to="/auth" />
+        <Redirect to="/home" />
       </Route>
     )
 
