@@ -1,13 +1,10 @@
 import React from 'react'
 import PhotoList from '../components/PhotoList'
 
-const Auth = ({ photos, onClickLodeMore }) => {
+const Auth = () => {
   return (
     <div>
-      <PhotoList photos={photos} />
-      <button onClick={onClickLodeMore} type="button" className="ui button">
-        Load more
-      </button>
+      <PhotoList />
     </div>
   )
 }

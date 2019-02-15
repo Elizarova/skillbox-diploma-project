@@ -1,12 +1,7 @@
-import unsplash from '../api/unsplash'
+import { authenticationUrl } from '../api/unsplash'
 
 const Home = () => {
-  const authenticationUrl = unsplash.auth.getAuthenticationUrl([
-    'public',
-    'write_likes',
-  ])
-
-  console.log(authenticationUrl)
+  // console.log(authenticationUrl)
   window.location.assign(authenticationUrl)
   return null
 }
