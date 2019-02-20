@@ -1,32 +1,38 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { fetchPhotoList, fetchMorePhotos, loadPhotos } from '../actions'
 import PhotoCard from './PhotoCard'
+import { connect } from 'react-redux'
+import { fetchPhotoList, fetchMorePhotos, clearPhotoList } from '../actions'
 
 class PhotoList extends React.Component {
   componentDidMount() {
-    if (this.props.photos.length === 0) {
+    const len = this.props.photos.length
+    if (len) {
       this.props.fetchPhotoList(this.props.currentPage)
-    } else this.props.loadPhotos()
+    } else {
+      // refetch all photos with updated likes
+      this.props.clearPhotoList()
+      this.props.fetchPhotoList(1, len)
+    }
   }
 
   onClickLoadMore = () => this.props.fetchMorePhotos(this.props.currentPage)
 
-  renderList() {
+  renderList = () => {
     return this.props.photos.map(photo => {
       return <PhotoCard key={photo.id} photo={photo} />
     })
   }
 
   render() {
+    console.log(this.props.photos)
     return (
-      <div className="ui four column grid">
+      <div className="ui two column grid">
         {this.renderList()}
         <div style={{ textAlign: 'center', width: '100%' }}>
           <button
-            onClick={this.onClickLoadMore}
             type="button"
             className="ui button"
+            onClick={this.onClickLoadMore}
           >
             Load more
           </button>
@@ -45,5 +51,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchPhotoList, fetchMorePhotos, loadPhotos }
+  { fetchPhotoList, fetchMorePhotos, clearPhotoList }
 )(PhotoList)

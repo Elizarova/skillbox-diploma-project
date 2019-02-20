@@ -2,52 +2,84 @@ import { toJson } from 'unsplash-js'
 import { unsplash } from '../api/unsplash'
 
 const PHOTOS_PER_PAGE = 2
+const code = window.location.search.split('code=')[1]
 
-export const fetchPhotoList = currentPage => async dispatch => {
-  const code = window.location.search.split('code=')[1]
+// const code = '03ed3efc1f7ef5febe66b5fe427f211c71c550a1355a5d73fb450d27d5ddfed2'
 
-  // const code = '1508cec4829dcb23f146192346c94b27134646cc4265f58f6e26c39bceb0cf21'
+export const clearPhotoList = () => {
+  return { type: 'CLEAR_PHOTO_LIST' }
+}
 
-  const authOk = await unsplash.auth
+export const fetchPhotoList = (
+  currentPage,
+  photoPerPage = PHOTOS_PER_PAGE
+) => async dispatch => {
+  await unsplash.auth
     .userAuthentication(code)
     .then(toJson)
     .then(json => {
       if (json.error) {
-        console.log(json.error_description)
-        return false
+        console.log(json.error.toUpperCase())
       }
       unsplash.auth.setBearerToken(json.access_token)
-      return true
     })
 
-  if (authOk) {
-    const response = await unsplash.photos
-      .listPhotos(currentPage, PHOTOS_PER_PAGE, 'latest')
-      .then(toJson)
-
-    console.log('response', response)
-
-    dispatch({
-      type: 'FETCH_PHOTOS',
-      payload: response,
-    })
-  }
-}
-
-export const fetchMorePhotos = currentPage => async dispatch => {
   const response = await unsplash.photos
-    .listPhotos(currentPage + 1, PHOTOS_PER_PAGE, 'latest')
+    .listPhotos(currentPage, photoPerPage, 'latest')
     .then(toJson)
 
-  console.log('response', response)
+  dispatch({
+    type: 'FETCH_PHOTOS',
+    payload: response,
+  })
+}
+
+export const fetchMorePhotos = (
+  currentPage,
+  photoPerPage = PHOTOS_PER_PAGE
+) => async dispatch => {
+  const response = await unsplash.photos
+    .listPhotos(currentPage + 1, photoPerPage, 'latest')
+    .then(toJson)
+
   dispatch({
     type: 'FETCH_MORE_PHOTOS',
     payload: response,
   })
 }
 
-export const loadPhotos = () => {
-  return {
-    type: 'LOAD_PHOTOS',
+export const getPhoto = id => async dispatch => {
+  const data = await unsplash.photos.getPhoto(id).then(toJson)
+  const payload = { likedByUser: data.liked_by_user, likes: data.likes }
+
+  dispatch({
+    type: 'GET_PHOTO',
+    payload: payload,
+  })
+}
+
+export const likePhoto = id => async dispatch => {
+  const data = await unsplash.photos.likePhoto(id).then(toJson)
+  const payload = {
+    likedByUser: data.photo.liked_by_user,
+    likes: data.photo.likes,
   }
+
+  dispatch({
+    type: 'LIKE_PHOTO',
+    payload: payload,
+  })
+}
+
+export const unlikePhoto = id => async dispatch => {
+  const data = await unsplash.photos.unlikePhoto(id).then(toJson)
+  const payload = {
+    likedByUser: data.photo.liked_by_user,
+    likes: data.photo.likes,
+  }
+
+  dispatch({
+    type: 'UNLIKE_PHOTO',
+    payload: payload,
+  })
 }
