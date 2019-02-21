@@ -7,7 +7,7 @@ class PhotoList extends React.Component {
   componentDidMount() {
     const len = this.props.photos.length
     if (len) {
-      this.props.fetchPhotoList(this.props.currentPage)
+      this.props.fetchPhotoList(this.props.currentPage, 2)
     } else {
       // refetch all photos with updated likes
       this.props.clearPhotoList()
@@ -15,7 +15,7 @@ class PhotoList extends React.Component {
     }
   }
 
-  onClickLoadMore = () => this.props.fetchMorePhotos(this.props.currentPage)
+  onClickLoadMore = () => this.props.fetchMorePhotos(this.props.currentPage, 2)
 
   renderList = () => {
     return this.props.photos.map(photo => {
