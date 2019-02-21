@@ -16,9 +16,6 @@ export default (state = INITIAL_STATE, action) => {
         photos: [...state.photos, ...action.payload],
         currentPage: state.currentPage + 1,
       }
-    case 'CLEAR_PHOTO_LIST':
-      return { ...state, photos: INITIAL_STATE.photos }
-
     default:
       return state
   }
