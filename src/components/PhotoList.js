@@ -6,7 +6,7 @@ import { fetchPhotoList, fetchMorePhotos, clearPhotoList } from '../actions'
 class PhotoList extends React.Component {
   componentDidMount() {
     const len = this.props.photos.length
-    if (len) {
+    if (len === 0) {
       this.props.fetchPhotoList(this.props.currentPage, 2)
     } else {
       // refetch all photos with updated likes
