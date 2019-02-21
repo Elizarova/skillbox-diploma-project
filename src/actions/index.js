@@ -5,10 +5,6 @@ const code = window.location.search.split('code=')[1]
 
 // const code = '03ed3efc1f7ef5febe66b5fe427f211c71c550a1355a5d73fb450d27d5ddfed2'
 
-export const clearPhotoList = () => {
-  return { type: 'CLEAR_PHOTO_LIST' }
-}
-
 export const fetchPhotoList = (currentPage, photoPerPage) => async dispatch => {
   await unsplash.auth
     .userAuthentication(code)

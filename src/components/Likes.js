@@ -4,18 +4,13 @@ import { getPhoto, likePhoto, unlikePhoto } from '../actions'
 
 class Likes extends React.Component {
   componentDidMount() {
-    console.log('Likes componentDidMount', this.props)
     this.props.getPhoto(this.props.photoId)
   }
 
   onClickLikeIcon = () => {
-    console.log(this.props.likedByUser)
-
     if (this.props.likedByUser) {
-      console.log('UNLIKE')
       this.props.unlikePhoto(this.props.photoId)
     } else {
-      console.log('LIKE')
       this.props.likePhoto(this.props.photoId)
     }
   }
