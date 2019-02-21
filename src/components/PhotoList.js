@@ -1,7 +1,7 @@
 import React from 'react'
 import PhotoCard from './PhotoCard'
 import { connect } from 'react-redux'
-import { fetchPhotoList, fetchMorePhotos, clearPhotoList } from '../actions'
+import { fetchPhotoList, fetchMorePhotos } from '../actions'
 
 class PhotoList extends React.Component {
   componentDidMount() {
@@ -46,5 +46,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchPhotoList, fetchMorePhotos, clearPhotoList }
+  { fetchPhotoList, fetchMorePhotos }
 )(PhotoList)
