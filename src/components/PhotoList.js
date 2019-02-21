@@ -26,7 +26,7 @@ class PhotoList extends React.Component {
   render() {
     console.log(this.props.photos)
     return (
-      <div className="ui two column grid">
+      <div className="ui four column grid">
         {this.renderList()}
         <div style={{ textAlign: 'center', width: '100%' }}>
           <button

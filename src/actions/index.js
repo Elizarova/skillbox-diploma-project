@@ -1,7 +1,7 @@
 import { toJson } from 'unsplash-js'
 import { unsplash } from '../api/unsplash'
 
-const PHOTOS_PER_PAGE = 2
+//const PHOTOS_PER_PAGE = 2
 const code = window.location.search.split('code=')[1]
 
 // const code = '03ed3efc1f7ef5febe66b5fe427f211c71c550a1355a5d73fb450d27d5ddfed2'
@@ -12,7 +12,7 @@ export const clearPhotoList = () => {
 
 export const fetchPhotoList = (
   currentPage,
-  photoPerPage = PHOTOS_PER_PAGE
+  photoPerPage = 2
 ) => async dispatch => {
   await unsplash.auth
     .userAuthentication(code)
@@ -36,10 +36,10 @@ export const fetchPhotoList = (
 
 export const fetchMorePhotos = (
   currentPage,
-  photoPerPage = PHOTOS_PER_PAGE
+  PHOTOS_PER_PAGE
 ) => async dispatch => {
   const response = await unsplash.photos
-    .listPhotos(currentPage + 1, photoPerPage, 'latest')
+    .listPhotos(currentPage + 1, PHOTOS_PER_PAGE, 'latest')
     .then(toJson)
 
   dispatch({
