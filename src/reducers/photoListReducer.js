@@ -8,7 +8,7 @@ export default (state = INITIAL_STATE, action) => {
     case 'FETCH_PHOTOS':
       return {
         ...state,
-        photos: [...state.photos, ...action.payload],
+        photos: action.payload,
       }
     case 'FETCH_MORE_PHOTOS':
       return {

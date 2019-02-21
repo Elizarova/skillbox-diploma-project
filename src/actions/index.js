@@ -1,21 +1,7 @@
 import { toJson } from 'unsplash-js'
 import { unsplash } from '../api/unsplash'
 
-const code = window.location.search.split('code=')[1]
-
-// const code = '03ed3efc1f7ef5febe66b5fe427f211c71c550a1355a5d73fb450d27d5ddfed2'
-
 export const fetchPhotoList = (currentPage, photoPerPage) => async dispatch => {
-  await unsplash.auth
-    .userAuthentication(code)
-    .then(toJson)
-    .then(json => {
-      if (json.error) {
-        console.log(json.error.toUpperCase())
-      }
-      unsplash.auth.setBearerToken(json.access_token)
-    })
-
   const response = await unsplash.photos
     .listPhotos(currentPage, photoPerPage, 'latest')
     .then(toJson)

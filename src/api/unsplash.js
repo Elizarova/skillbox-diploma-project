@@ -1,4 +1,4 @@
-import Unsplash from 'unsplash-js'
+import Unsplash, { toJson } from 'unsplash-js'
 
 export const unsplash = new Unsplash({
   applicationId:
@@ -12,3 +12,16 @@ export const authenticationUrl = unsplash.auth.getAuthenticationUrl([
   'public',
   'write_likes',
 ])
+
+export const unsplashAuth = code => {
+  return unsplash.auth
+    .userAuthentication(code)
+    .then(toJson)
+    .then(json => {
+      if (json.error) {
+        console.log(json.error.toUpperCase())
+      }
+      console.log('authUnsplash')
+      unsplash.auth.setBearerToken(json.access_token)
+    })
+}
