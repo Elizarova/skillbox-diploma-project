@@ -29,7 +29,7 @@ const PhotoView = ({ match, history, photos }) => {
     <div className="photo-view">
       <div className="content">
         <div className="photo">
-          <Photo src={urls.thumb} descripton={descripton} />
+          <Photo src={urls.regular} descripton={descripton} />
         </div>
         <div className="photo-detail">
           <div>
