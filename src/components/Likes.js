@@ -1,44 +1,63 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { getPhoto, likePhoto, unlikePhoto } from '../actions'
+import { unsplash } from '../api/unsplash'
+import { toJson } from 'unsplash-js'
 
 class Likes extends React.Component {
+  state = { likedByUser: null, likes: null }
+
   componentDidMount() {
-    this.props.getPhoto(this.props.photoId)
+    this.setState({
+      likedByUser: this.props.photo.liked_by_user,
+      likes: this.props.photo.likes,
+    })
   }
 
-  onClickLikeIcon = () => {
-    if (this.props.likedByUser) {
-      this.props.unlikePhoto(this.props.photoId)
+  onClickLikeIcon = photo => {
+    if (!this.state.likedByUser) {
+      unsplash.photos
+        .likePhoto(photo.id)
+        .then(toJson)
+        .then(json => {
+          unsplash.photos
+            .getPhoto(json.photo.id)
+            .then(toJson)
+            .then(json => {
+              this.setState({
+                likedByUser: json.liked_by_user,
+                likes: json.likes,
+              })
+            })
+        })
     } else {
-      this.props.likePhoto(this.props.photoId)
+      unsplash.photos
+        .unlikePhoto(photo.id)
+        .then(toJson)
+        .then(json => {
+          unsplash.photos
+            .getPhoto(json.photo.id)
+            .then(toJson)
+            .then(json => {
+              this.setState({
+                likedByUser: json.liked_by_user,
+                likes: json.likes,
+              })
+            })
+        })
     }
   }
 
   render() {
-    const label = this.props.likedByUser ? 'red inline' : 'black outline'
-
+    const label = this.state.likedByUser ? 'red inline' : 'black outline'
     return (
       <div>
         <i
-          onClick={() => this.onClickLikeIcon()}
+          onClick={() => this.onClickLikeIcon(this.props.photo)}
           className={`${label} large heart icon`}
         />
-        {this.props.likes} likes
+        {this.state.likes} likes
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    photoId: ownProps.photoId,
-    likedByUser: state.photo.likedByUser,
-    likes: state.photo.likes,
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  { getPhoto, likePhoto, unlikePhoto }
-)(Likes)
+export default Likes

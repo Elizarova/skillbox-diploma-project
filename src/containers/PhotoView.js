@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom'
 import Photo from '../components/Photo'
 import Likes from '../components/Likes'
 import dateConverter from '../utils/dateConverter'
+
 import './PhotoView.css'
 
 const PhotoView = ({ match, history, photos }) => {
@@ -12,7 +13,6 @@ const PhotoView = ({ match, history, photos }) => {
   if (!photo) {
     return (
       <Route exact path="/">
-        {/* <Redirect to="/auth" /> */}
         <Redirect to="/home" />
       </Route>
     )
@@ -23,18 +23,18 @@ const PhotoView = ({ match, history, photos }) => {
     history.goBack()
   }
 
-  const { updated_at, user, urls, descripton, id } = photo
+  const { updated_at, user, urls, descripton } = photo
 
   return (
     <div className="photo-view">
       <div className="content">
         <div className="photo">
-          <Photo src={urls.regular} descripton={descripton} />
+          <Photo src={urls.thumb} descripton={descripton} />
         </div>
         <div className="photo-detail">
           <div>
             <span style={{ float: 'right' }}>
-              <Likes photoId={id} />
+              <Likes photo={photo} />
             </span>
             <p>
               Photo by&nbsp;
