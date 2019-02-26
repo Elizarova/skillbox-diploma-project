@@ -1,7 +1,7 @@
 import './PhotoList.css'
 import React from 'react'
-import PhotoCard from './PhotoCard'
 import { unsplash } from '../api/unsplash'
+import PhotoCard from './PhotoCard'
 
 import { connect } from 'react-redux'
 import { fetchPhotoList, fetchMorePhotos } from '../actions'

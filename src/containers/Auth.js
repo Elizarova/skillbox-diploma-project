@@ -1,9 +1,8 @@
 import React from 'react'
 import PhotoList from '../components/PhotoList'
-
-import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { unsplashAuth } from '../actions'
+import { Route, Redirect } from 'react-router-dom'
 
 const Auth = props => {
   if (props.token === undefined) {
@@ -13,7 +12,6 @@ const Auth = props => {
       </Route>
     )
   } else {
-    console.log(props)
     return (
       <div>
         <PhotoList />

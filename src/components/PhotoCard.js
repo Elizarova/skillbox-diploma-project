@@ -1,7 +1,7 @@
 import dateConverter from '../utils/dateConverter'
 import React from 'react'
-import Photo from './Photo'
 import { Link } from 'react-router-dom'
+import Photo from './Photo'
 
 const PhotoCard = ({ photo }) => {
   const { likes, user, updated_at, id, urls, description } = photo

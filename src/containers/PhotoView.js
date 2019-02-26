@@ -5,7 +5,6 @@ import Photo from '../components/Photo'
 import Likes from '../components/Likes'
 import dateConverter from '../utils/dateConverter'
 import { unsplash } from '../api/unsplash'
-
 import './PhotoView.css'
 
 const PhotoView = ({ match, history, photos, token }) => {

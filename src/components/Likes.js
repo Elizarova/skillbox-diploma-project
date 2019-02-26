@@ -1,6 +1,6 @@
 import React from 'react'
-import { unsplash } from '../api/unsplash'
 import { toJson } from 'unsplash-js'
+import { unsplash } from '../api/unsplash'
 
 class Likes extends React.Component {
   state = { likedByUser: null, likes: null }

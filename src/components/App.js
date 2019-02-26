@@ -1,13 +1,14 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { unsplashAuth } from '../actions'
 import { unsplash } from '../api/unsplash'
+
 import Home from '../containers/Home'
 import Auth from '../containers/Auth'
 import PhotoView from '../containers/PhotoView'
 import PageNotFound from '../containers/PageNotFound'
-import { connect } from 'react-redux'
-import { unsplashAuth } from '../actions'
 
 const code = window.location.search.split('code=')[1]
 // const code = '52a4fed212652f6aaf7f4f642d63303fc9b252675c2d34bc85e5ce7277b9fc01'
