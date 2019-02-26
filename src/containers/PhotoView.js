@@ -4,19 +4,22 @@ import { Route, Redirect } from 'react-router-dom'
 import Photo from '../components/Photo'
 import Likes from '../components/Likes'
 import dateConverter from '../utils/dateConverter'
+import { unsplash } from '../api/unsplash'
 
 import './PhotoView.css'
 
-const PhotoView = ({ match, history, photos }) => {
+const PhotoView = ({ match, history, photos, token }) => {
   const photo = photos.filter(photo => photo.id === match.params.id)[0]
 
-  if (!photo) {
+  if (!photo || token === undefined) {
     return (
       <Route exact path="/">
         <Redirect to="/home" />
       </Route>
     )
   }
+
+  unsplash.auth.setBearerToken(token)
 
   const back = e => {
     e.stopPropagation()
@@ -60,6 +63,7 @@ const PhotoView = ({ match, history, photos }) => {
 const mapStateToProps = state => {
   return {
     photos: state.photoList.photos,
+    token: state.auth.token,
   }
 }
 
